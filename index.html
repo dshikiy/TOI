@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Жандос & Назерке - Үйлену тойы</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;500&family=Pinyon+Script&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #FDFBF7;
+            --text-color: #4A4A4A;
+            --gold: #C5A880;
+            --gold-dark: #A68B63;
+            --white: #FFFFFF;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #EFEBE4;
+            color: var(--text-color);
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            overflow-x: hidden;
+        }
+
+        /* ЭКРАН ЗАГРУЗКИ */
+        #preloader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-color); z-index: 9999;
+            display: flex; justify-content: center; align-items: center; flex-direction: column;
+            transition: opacity 0.8s ease;
+        }
+        .preloader-names {
+            font-family: 'Pinyon Script', cursive; font-size: 56px;
+            color: var(--gold); animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(0.95); opacity: 0.8; }
+            50% { transform: scale(1.05); opacity: 1; }
+            100% { transform: scale(0.95); opacity: 0.8; }
+        }
+
+        /* НЕГІЗГІ КОНТЕЙНЕР */
+        .app-container {
+            width: 100%; max-width: 480px;
+            background-color: var(--bg-color);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            position: relative;
+            background-image: url('https://www.transparenttextures.com/patterns/clean-textile.png');
+        }
+
+        h1, h2, h3, .cursive {
+            font-family: 'Cormorant Garamond', serif; font-weight: 600;
+        }
+
+        /* 1. ГЛАВНЫЙ ЭКРАН */
+        .hero-section {
+            height: 100vh;
+            /* Мұнда өз суретіңізді қоя аласыз */
+            background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=1000&auto=format&fit=crop') center/cover no-repeat;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; color: var(--white); position: relative;
+            background-attachment: fixed;
+        }
+
+        .music-btn {
+            position: absolute; top: 20px; right: 20px;
+            background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.5);
+            color: var(--white); border-radius: 50%;
+            width: 55px; height: 55px;
+            display: flex; justify-content: center; align-items: center;
+            cursor: pointer; backdrop-filter: blur(8px);
+            font-size: 24px; z-index: 10; transition: 0.3s;
+        }
+
+        .names-main {
+            font-family: 'Pinyon Script', cursive; font-size: 64px;
+            line-height: 0.9; margin: 20px 0; text-shadow: 2px 2px 8px rgba(0,0,0,0.4);
+        }
+
+        .scroll-down {
+            position: absolute; bottom: 30px; font-size: 11px; letter-spacing: 3px;
+            text-transform: uppercase; animation: bounce 2s infinite;
+            display: flex; flex-direction: column; align-items: center;
+        }
+        .scroll-down span { font-size: 20px; margin-bottom: 5px; }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        /* БЛОКТАР СТИЛІ */
+        .section { padding: 70px 30px; text-align: center; position: relative; }
+        .section::after {
+            content: "❦"; display: block; font-size: 24px;
+            color: var(--gold); opacity: 0.3; margin-top: 40px;
+        }
+        .section:last-child::after { display: none; }
+        .section-title { font-size: 34px; color: var(--gold-dark); margin-bottom: 25px; }
+        .text-block { font-size: 15px; font-weight: 300; margin-bottom: 25px; text-align: center; line-height: 1.8; color: #555; }
+
+        /* КАЛЕНДАРЬ */
+        .calendar-box {
+            margin: 30px 0; padding: 25px; background: var(--white);
+            border-radius: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+        }
+        .cal-month { font-size: 26px; color: var(--gold-dark); margin-bottom: 20px; font-family: 'Cormorant Garamond', serif; }
+        .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 12px; font-size: 15px; font-weight: 400; color: #444; }
+        .cal-day-name { color: #A0A0A0; font-size: 12px; text-transform: uppercase; }
+        .cal-active { position: relative; color: var(--gold-dark); font-weight: 600; z-index: 1; }
+        .cal-active::before {
+            content: '♡'; position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -55%); font-size: 32px;
+            color: var(--gold); z-index: -1; opacity: 0.8;
+        }
+
+        /* ТАЙМЕР */
+        .timer { display: flex; justify-content: center; gap: 12px; margin-top: 30px; }
+        .timer-item { display: flex; flex-direction: column; align-items: center; }
+        .timer-item span:first-child {
+            font-size: 34px; font-family: 'Cormorant Garamond', serif;
+            color: var(--gold-dark); background: var(--white);
+            width: 65px; height: 65px; display: flex; justify-content: center; align-items: center;
+            border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); border: 1px solid rgba(197, 168, 128, 0.2);
+        }
+        .timer-item span:last-child { font-size: 10px; text-transform: uppercase; margin-top: 10px; color: #888; letter-spacing: 1px; }
+
+        /* БАҒДАРЛАМА */
+        .timeline {
+            max-width: 320px; margin: 0 auto; text-align: left;
+            padding-left: 25px; border-left: 1px solid rgba(197, 168, 128, 0.4);
+        }
+        .tl-item { position: relative; margin-bottom: 35px; padding-left: 20px; }
+        .tl-item::before {
+            content: ''; position: absolute; left: -31px; top: 4px;
+            width: 12px; height: 12px; background: var(--white);
+            border: 2px solid var(--gold); border-radius: 50%;
+        }
+        .tl-time { font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--gold-dark); font-weight: 600; line-height: 1; }
+        .tl-desc { font-size: 14px; margin-top: 8px; color: #555; }
+
+        /* ФОТОГАЛЕРЕЯ (LOVE STORY) */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        .gallery-item {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        /* Үшінші суретті үлкенірек және ортаға қою */
+        .gallery-item:nth-child(3) {
+            grid-column: span 2;
+            height: 250px;
+        }
+
+        /* ИЕЛЕРІ & САРҚЫТ */
+        .hosts-name { font-family: 'Pinyon Script', cursive; font-size: 46px; color: var(--text-color); margin: 15px 0 30px 0; }
+        .sarkyt-box {
+            border: 1px dashed var(--gold); padding: 35px 20px;
+            border-radius: 16px; background: rgba(197, 168, 128, 0.05);
+        }
+
+        /* КНОПКИ ЖӘНЕ ФОРМА */
+        .btn {
+            display: inline-block; background: var(--gold-dark); color: var(--white);
+            padding: 18px 30px; border-radius: 30px; text-decoration: none;
+            font-size: 13px; letter-spacing: 2px; text-transform: uppercase; font-weight: 500;
+            border: none; cursor: pointer; width: 100%; transition: 0.3s; margin-top: 10px;
+        }
+        .btn:hover { background: #8f754f; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(166, 139, 99, 0.3); }
+
+        form { text-align: left; background: var(--white); padding: 25px; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.03); margin-top: 30px;}
+        .input-field {
+            width: 100%; padding: 15px; border: 1px solid #E0E0E0; border-radius: 8px;
+            margin-top: 8px; margin-bottom: 25px; font-family: inherit; font-size: 14px;
+            transition: border 0.3s; background: #FAFAFA;
+        }
+        .input-field:focus { outline: none; border-color: var(--gold); background: var(--white); }
+        
+        /* Радио кнопкалар */
+        .radio-container { display: block; position: relative; padding-left: 35px; margin-bottom: 15px; cursor: pointer; font-size: 14px; color: #555; }
+        .radio-container input { position: absolute; opacity: 0; cursor: pointer; }
+        .checkmark { position: absolute; top: -2px; left: 0; height: 22px; width: 22px; background-color: var(--white); border: 1px solid #ccc; border-radius: 50%; transition: 0.2s; }
+        .radio-container:hover input ~ .checkmark { border-color: var(--gold); }
+        .radio-container input:checked ~ .checkmark { border-color: var(--gold-dark); }
+        .checkmark:after { content: ""; position: absolute; display: none; }
+        .radio-container input:checked ~ .checkmark:after { display: block; }
+        .radio-container .checkmark:after { top: 5px; left: 5px; width: 10px; height: 10px; border-radius: 50%; background: var(--gold-dark); }
+
+        /* АНИМАЦИЯ */
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 0.9s cubic-bezier(0.5, 0, 0, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+    </style>
+</head>
+<body>
+
+<div id="preloader">
+    <div class="preloader-names">Ж & Н</div>
+    <div style="font-size: 12px; letter-spacing: 3px; margin-top: 10px; color: #888;">ШАҚЫРУ БИЛЕТІ</div>
+</div>
+
+<div class="app-container">
+
+    <audio id="bgMusic" loop>
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="hero-section">
+        <div class="music-btn" onclick="toggleMusic()" id="musicIcon">🎵</div>
+        
+        <h2 style="font-weight: 300; letter-spacing: 4px; font-size: 14px; margin-bottom: 15px;">ҮЙЛЕНУ ТОЙЫ</h2>
+        <div class="names-main">Жандос <br>&<br> Назерке</div>
+        <p style="font-family: 'Cormorant Garamond', serif; font-size: 26px; margin-top: 15px;">11.05.2026</p>
+
+        <div class="scroll-down">
+            <span>↓</span>
+            Төмен түсіңіз
+        </div>
+    </div>
+
+    <div class="section reveal">
+        <h2 class="section-title">Той салтанаты</h2>
+        
+        <div class="calendar-box">
+            <div class="cal-month">Мамыр 2026</div>
+            <div class="cal-grid">
+                <div class="cal-day-name">Дс</div><div class="cal-day-name">Сс</div><div class="cal-day-name">Ср</div><div class="cal-day-name">Бс</div><div class="cal-day-name">Жм</div><div class="cal-day-name">Сб</div><div class="cal-day-name">Жс</div>
+                <div></div><div></div><div></div><div></div><div>1</div><div>2</div><div>3</div>
+                <div>4</div><div>5</div><div>6</div><div>7</div><div>8</div><div>9</div><div>10</div>
+                <div class="cal-active">11</div><div>12</div><div>13</div><div>14</div><div>15</div><div>16</div><div>17</div>
+                <div>18</div><div>19</div><div>20</div><div>21</div><div>22</div><div>23</div><div>24</div>
+                <div>25</div><div>26</div><div>27</div><div>28</div><div>29</div><div>30</div><div>31</div>
+            </div>
+        </div>
+
+        <p style="font-size: 13px; text-transform: uppercase; letter-spacing: 3px; margin-top: 25px; color: #888;">Басталу уақыты</p>
+        <div style="font-size: 42px; font-family: 'Cormorant Garamond', serif; color: var(--gold-dark); line-height: 1.2;">18:00</div>
+    </div>
+
+    <div class="section reveal" style="background-color: var(--white);">
+        <p class="text-block">
+            Құрметті ағайын-туыс, бауырлар, құда-жекжат, нағашы-жиен, бөлелер, дос-жаран, әріптестер және көршілер!
+        </p>
+        <h2 class="section-title" style="font-size: 20px; margin: 30px 0 10px; letter-spacing: 1px;">СІЗДЕРДІ ҰЛЫМЫЗ</h2>
+        <h3 class="cursive" style="font-size: 42px; color: var(--gold-dark);">Жандос</h3>
+        <p style="margin: 5px 0; font-size: 13px; letter-spacing: 2px;">ПЕН КЕЛІНІМІЗ</p>
+        <h3 class="cursive" style="font-size: 42px; color: var(--gold-dark);">Назеркенің</h3>
+        <p class="text-block" style="margin-top: 25px;">
+            Үйлену тойына арналған салтанатты ақ дастарханымыздың қадірлі қонағы болуға шақырамыз! 
+        </p>
+    </div>
+
+    <div class="section reveal">
+        <h2 class="section-title" style="font-size: 28px;">Тойға дейін:</h2>
+        <div class="timer" id="countdown">
+            <div class="timer-item"><span id="days">00</span><span>Күн</span></div>
+            <div class="timer-item"><span id="hours">00</span><span>Сағат</span></div>
+            <div class="timer-item"><span id="mins">00</span><span>Минут</span></div>
+            <div class="timer-item"><span id="secs">00</span><span>Секунд</span></div>
+        </div>
+    </div>
+
+    <div class="section reveal" style="background-color: var(--white);">
+        <h2 class="section-title" style="font-size: 28px; margin-bottom: 35px;">Той бағдарламасы</h2>
+        <div class="timeline">
+            <div class="tl-item">
+                <div class="tl-time">17:00</div>
+                <div class="tl-desc">Беташар салтанаты</div>
+            </div>
+            <div class="tl-item">
+                <div class="tl-time">18:00</div>
+                <div class="tl-desc">Тойдың басталуы</div>
+            </div>
+            <div class="tl-item">
+                <div class="tl-time">19:00</div>
+                <div class="tl-desc">Құдаларды қарсы алу</div>
+            </div>
+            <div class="tl-item">
+                <div class="tl-time">21:00</div>
+                <div class="tl-desc">Музыкалық шоу және би</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section reveal">
+        <h2 class="section-title" style="font-size: 28px;">Біздің тарих</h2>
+        <p style="font-family: 'Cormorant Garamond', serif; font-size: 18px; color: #777; font-style: italic;">Махаббат хикаясы...</p>
+        
+        <div class="gallery-grid">
+            <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=600&auto=format&fit=crop" class="gallery-item" alt="Love story 1">
+            <img src="https://images.unsplash.com/photo-1543616991-75a2c12500bf?q=80&w=600&auto=format&fit=crop" class="gallery-item" alt="Love story 2">
+            <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=800&auto=format&fit=crop" class="gallery-item" alt="Love story 3">
+        </div>
+    </div>
+
+    <div class="section reveal" style="background-color: var(--white);">
+        <h2 style="font-size: 13px; text-transform: uppercase; letter-spacing: 3px; color: #888;">Той иелері:</h2>
+        <div class="hosts-name">Елтүзер мен Гүлмира</div>
+
+        <div class="sarkyt-box">
+            <p style="font-family: 'Cormorant Garamond', serif; font-size: 22px; text-transform: uppercase; letter-spacing: 2px; color: var(--gold-dark); line-height: 1.4;">Балаларыңызға<br>сарқыт апаруларыңызға<br>болады!</p>
+        </div>
+    </div>
+
+    <div class="section reveal">
+        <h2 class="section-title" style="font-size: 28px;">Мекен-жайымыз</h2>
+        <p style="font-size: 16px; margin-bottom: 5px;">Ақтау қаласы</p>
+        <p style="font-size: 26px; font-family: 'Cormorant Garamond', serif; color: var(--gold-dark); margin-bottom: 5px;">"Assyl Grant"</p>
+        <p style="font-size: 14px; color: #888; margin-bottom: 25px;">мейрамханасы</p>
+        
+        <a href="https://2gis.kz/aktau/geo/70000001032946876/51.296690,43.692229" class="btn" target="_blank">
+            📍 2Gis картасынан ашу
+        </a>
+    </div>
+
+    <div class="section reveal" style="background-color: var(--white);">
+        <h2 class="section-title" style="font-size: 24px; line-height: 1.3;">Тойға келуіңізді растауыңызды сұраймыз!</h2>
+        
+        <form onsubmit="alert('Рахмет! Бэкендті қосқан соң мәліметтер сізге түседі.'); return false;">
+            <label style="font-size: 12px; color: #777; text-transform: uppercase; letter-spacing: 1px;">Аты-жөніңіз (жұбайыңызбен келсеңіз, бірге жазыңыз):</label>
+            <input type="text" class="input-field" required placeholder="Мысалы: Арман мен Айжан">
+
+            <div style="margin-bottom: 25px;">
+                <label class="radio-container">Әрине, келемін
+                    <input type="radio" name="attend" value="yes" required>
+                    <span class="checkmark"></span>
+                </label>
+                <label class="radio-container">Жұбайыммен келемін
+                    <input type="radio" name="attend" value="spouse">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="radio-container">Өкінішке орай, келе алмаймын
+                    <input type="radio" name="attend" value="no">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+
+            <button type="submit" class="btn">Жауапты жіберу</button>
+        </form>
+    </div>
+
+</div>
+
+<script>
+    // Загрузка
+    window.addEventListener('load', function() {
+        setTimeout(function() {
+            document.getElementById('preloader').style.opacity = '0';
+            setTimeout(function() {
+                document.getElementById('preloader').style.display = 'none';
+            }, 800);
+        }, 1000);
+    });
+
+    // Музыка
+    let isPlaying = false;
+    const myAudio = document.getElementById("bgMusic");
+    const musicIcon = document.getElementById("musicIcon");
+
+    function toggleMusic() {
+        if (isPlaying) {
+            myAudio.pause();
+            musicIcon.innerHTML = "🎵";
+            musicIcon.style.background = "rgba(255,255,255,0.15)";
+            musicIcon.style.borderColor = "rgba(255,255,255,0.5)";
+        } else {
+            myAudio.play();
+            musicIcon.innerHTML = "⏸";
+            musicIcon.style.background = "rgba(166, 139, 99, 0.8)";
+            musicIcon.style.borderColor = "transparent";
+        }
+        isPlaying = !isPlaying;
+    }
+
+    // Таймер
+    const countDownDate = new Date("May 11, 2026 18:00:00").getTime();
+    setInterval(function() {
+        const now = new Date().getTime();
+        const distance = countDownDate - now;
+
+        if (distance > 0) {
+            document.getElementById("days").innerText = Math.floor(distance / (1000 * 60 * 60 * 24));
+            document.getElementById("hours").innerText = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            document.getElementById("mins").innerText = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            document.getElementById("secs").innerText = Math.floor((distance % (1000 * 60)) / 1000);
+        } else {
+            document.getElementById("countdown").innerHTML = "<h3 style='color:var(--gold-dark); font-family: Cormorant Garamond;'>Той басталды!</h3>";
+        }
+    }, 1000);
+
+    // Скролл анимациясы
+    function reveal() {
+        var reveals = document.querySelectorAll(".reveal");
+        for (var i = 0; i < reveals.length; i++) {
+            var windowHeight = window.innerHeight;
+            var elementTop = reveals[i].getBoundingClientRect().top;
+            var elementVisible = 80;
+            if (elementTop < windowHeight - elementVisible) {
+                reveals[i].classList.add("active");
+            }
+        }
+    }
+    window.addEventListener("scroll", reveal);
+    reveal(); 
+</script>
+
+</body>
+</html>
