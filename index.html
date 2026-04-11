@@ -68,47 +68,41 @@
             font-weight: 600;
         }
 
-        /* --- ҚАЗАҚИ ОЮ-ӨРНЕК --- */
+        /* --- ҚАЗАҚИ ОЮ ЖӘНЕ ЖАҢА РОМБ СЫЗЫҚША --- */
         .ornament-divider {
-            width: 100%;
-            height: 30px;
-            margin: 20px 0;
+            width: 100%; height: 30px; margin: 20px 0;
             background-image: url("data:image/svg+xml,%3Csvg width='120' height='30' viewBox='0 0 120 30' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M60 0C60 0 52 15 35 15C52 15 60 30 60 30C60 30 68 15 85 15C68 15 60 0 60 0Z' fill='%23D4AF37'/%3E%3Cpath d='M0 14H40V16H0V14Z' fill='%23D4AF37'/%3E%3Cpath d='M80 14H120V16H80V14Z' fill='%23D4AF37'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: center;
+            background-repeat: no-repeat; background-position: center;
+        }
+
+        /* Жаңа стиль: Сіз жіберген суреттегі ромб сызықшасы */
+        .diamond-divider {
+            display: flex; align-items: center; justify-content: center; margin: 15px 0;
+        }
+        .diamond-divider::before, .diamond-divider::after {
+            content: ''; width: 50px; height: 1px; background-color: var(--gold-dark); margin: 0 15px;
+        }
+        .diamond-shape {
+            width: 12px; height: 12px; background-color: var(--gold-dark); transform: rotate(45deg);
         }
 
         /* --- БЛОКТАРДЫҢ СТИЛІ --- */
         .section {
-            padding: 60px 25px;
-            text-align: center;
-            position: relative;
-            background-color: var(--bg-color);
+            padding: 60px 25px; text-align: center; position: relative; background-color: var(--bg-color);
         }
         
         .section-title {
-            font-size: 32px;
-            color: var(--gold-dark);
-            margin-bottom: 15px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            font-size: 32px; color: var(--gold-dark); margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px;
         }
         
         .text-block {
-            font-size: 15px;
-            font-weight: 400;
-            margin-bottom: 25px;
-            text-align: center;
-            line-height: 1.8;
-            color: var(--text-color);
+            font-size: 15px; font-weight: 400; margin-bottom: 25px; text-align: center; line-height: 1.8; color: var(--text-color);
         }
 
         /* --- 1. ГЛАВНЫЙ ЭКРАН (image_0.png) --- */
         .hero-section {
-            height: 100vh;
-            height: 100dvh; /* Телефон экранына дәлдеу */
+            height: 100vh; height: 100dvh;
             background: linear-gradient(rgba(20, 15, 10, 0.4), rgba(20, 15, 10, 0.7)), url('image_0.png') center/cover no-repeat;
-            background-attachment: fixed;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             text-align: center; color: var(--white); position: relative;
         }
@@ -122,15 +116,13 @@
         }
         
         .names-main {
-            font-family: 'Pinyon Script', cursive; font-size: 68px; line-height: 0.9;
-            margin: 15px 0; color: var(--gold);
+            font-family: 'Pinyon Script', cursive; font-size: 68px; line-height: 0.9; margin: 15px 0; color: var(--gold);
             text-shadow: 2px 4px 10px rgba(0, 0, 0, 0.6);
         }
         
         .scroll-down {
             position: absolute; bottom: 30px; font-size: 11px; letter-spacing: 3px;
-            text-transform: uppercase; animation: bounce 2s infinite;
-            display: flex; flex-direction: column; align-items: center; color: var(--gold);
+            text-transform: uppercase; animation: bounce 2s infinite; display: flex; flex-direction: column; align-items: center; color: var(--gold);
         }
         
         .scroll-down span { font-size: 24px; margin-bottom: 5px; }
@@ -143,38 +135,28 @@
 
         /* --- 2. КАЛЕНДАРЬ --- */
         .calendar-box {
-            margin: 20px 0; padding: 25px;
-            background: var(--white); border: 2px solid var(--bg-secondary);
+            margin: 20px 0; padding: 25px; background: var(--white); border: 2px solid var(--bg-secondary);
             border-radius: 12px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
         }
-        
         .cal-month { font-size: 24px; color: var(--gold-dark); margin-bottom: 20px; font-family: 'Cormorant Garamond', serif; text-transform: uppercase; }
         .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; font-size: 15px; font-weight: 500; color: var(--text-color); }
         .cal-day-name { color: var(--gold-dark); font-size: 11px; text-transform: uppercase; font-weight: 700; }
         .cal-active { position: relative; color: var(--white) !important; font-weight: 700; z-index: 1; }
         .cal-active::before {
             content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 35px; height: 35px; background-color: var(--gold-dark); border-radius: 50%; z-index: -1;
-            box-shadow: 0 4px 10px rgba(170, 126, 36, 0.4);
+            width: 35px; height: 35px; background-color: var(--gold-dark); border-radius: 50%; z-index: -1; box-shadow: 0 4px 10px rgba(170, 126, 36, 0.4);
         }
 
         /* --- 3. ШАҚЫРУ МӘТІНІ (image_1.png) --- */
         .invitation-section {
             background: url('image_1.png') center/cover no-repeat;
-            background-attachment: fixed;
-            padding: 80px 20px;
-            position: relative;
+            padding: 80px 20px; position: relative;
         }
 
         .glass-card {
-            background: rgba(253, 251, 247, 0.85); 
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            padding: 40px 25px;
-            border-radius: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
-            text-align: center;
+            background: rgba(253, 251, 247, 0.85); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            padding: 40px 25px; border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15); text-align: center;
         }
 
         .glass-card .cursive { font-size: 46px; color: var(--gold-dark); line-height: 1.2; }
@@ -183,17 +165,26 @@
         .timer { display: flex; justify-content: center; gap: 12px; margin-top: 20px; }
         .timer-item { display: flex; flex-direction: column; align-items: center; }
         .timer-item span:first-child {
-            font-size: 32px; font-family: 'Cormorant Garamond', serif; color: var(--white);
-            background: var(--gold-dark); width: 65px; height: 65px; display: flex; justify-content: center; align-items: center;
+            font-size: 32px; font-family: 'Cormorant Garamond', serif; color: var(--white); background: var(--gold-dark);
+            width: 65px; height: 65px; display: flex; justify-content: center; align-items: center;
             border-radius: 10px; box-shadow: 0 5px 15px rgba(170, 126, 36, 0.3);
         }
         .timer-item span:last-child { font-size: 10px; text-transform: uppercase; margin-top: 10px; color: var(--text-color); font-weight: 600; }
 
         /* --- 5. ТОЙ ИЕЛЕРІ & САРҚЫТ --- */
         .hosts-name { font-family: 'Pinyon Script', cursive; font-size: 50px; color: var(--gold-dark); margin: 5px 0 20px 0; }
-        .sarkyt-box { border: 2px solid var(--gold); padding: 30px 20px; border-radius: 12px; background: var(--bg-secondary); margin-top: 20px; }
+        
+        /* Сарқыт - ЖАҢА ДИЗАЙН */
+        .sarkyt-box { 
+            border: 1px solid var(--gold); /* Жұқа алтын рамка */
+            padding: 40px 20px; 
+            border-radius: 10px; 
+            background: #FDFCF9; 
+            margin-top: 30px; 
+            box-shadow: 0 5px 20px rgba(0,0,0,0.03);
+        }
 
-        /* --- 6. КАРТА --- */
+        /* --- 6. КАРТА (ЖАҢА ДИЗАЙН) --- */
         .map-section { background-color: var(--bg-secondary); }
 
         /* --- 7. КНОПКИ ЖӘНЕ ФОРМА --- */
@@ -202,7 +193,7 @@
             background: var(--gold-dark); color: var(--white); padding: 18px 30px;
             border-radius: 30px; text-decoration: none; font-size: 13px; letter-spacing: 2px;
             text-transform: uppercase; font-weight: 600; border: none; cursor: pointer; width: 100%;
-            transition: 0.3s; margin-top: 15px; box-shadow: 0 5px 15px rgba(170, 126, 36, 0.4);
+            transition: 0.3s; margin-top: 15px; box-shadow: 0 5px 15px rgba(170, 126, 36, 0.4); gap: 10px;
         }
         .btn:hover { background: #92691B; transform: translateY(-3px); }
         
@@ -221,13 +212,11 @@
         .reveal { opacity: 0; transform: translateY(40px); transition: all 0.9s cubic-bezier(0.5, 0, 0, 1); }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
-        /* =========================================
-           ТЕЛЕФОНДАРҒА АРНАЛҒАН ФИКС (СУРЕТ КӨРІНУІ ҮШІН)
-           ========================================= */
+        /* ТЕЛЕФОНДАРҒА АРНАЛҒАН ФИКС */
         @media (max-width: 768px) {
             .hero-section, .invitation-section {
-                background-attachment: scroll !important; /* Телефонда суретті қатырмайды */
-                background-position: center center !important; /* Ортасынан дәлдейді */
+                background-attachment: scroll !important;
+                background-position: center center !important;
             }
         }
     </style>
@@ -302,7 +291,7 @@
             </div>
         </div>
 
-        <div class="section reveal">
+        <div class="section reveal" style="background-color: var(--white);">
             <h2 class="section-title" style="font-size: 28px;">Тойға дейін:</h2>
             <div class="ornament-divider"></div>
             
@@ -314,33 +303,38 @@
             </div>
         </div>
 
-        <div class="section reveal" style="background-color: var(--white);">
+        <div class="section reveal">
             <h2 style="font-size: 13px; text-transform: uppercase; letter-spacing: 3px; color: #888; font-weight: 600;">Той иелері:</h2>
             <div class="hosts-name">Елтүзер мен Гүлмира</div>
 
             <div class="sarkyt-box">
-                <div class="ornament-divider" style="margin-top: 0; height: 20px;"></div>
-                <p style="font-family: 'Cormorant Garamond', serif; font-size: 20px; text-transform: uppercase; letter-spacing: 2px; color: var(--gold-dark); line-height: 1.5; font-weight: bold;">
+                <div class="diamond-divider"><div class="diamond-shape"></div></div>
+                <p style="font-family: 'Cormorant Garamond', serif; font-size: 18px; text-transform: uppercase; letter-spacing: 2px; color: var(--gold-dark); line-height: 1.8; font-weight: 600; margin: 15px 0;">
                     Балаларыңызға<br>сарқыт апаруларыңызға<br>болады!
                 </p>
-                <div class="ornament-divider" style="margin-bottom: 0; height: 20px;"></div>
+                <div class="diamond-divider"><div class="diamond-shape"></div></div>
             </div>
         </div>
 
         <div class="section map-section reveal">
-            <h2 class="section-title" style="font-size: 28px;">Мекен-жайымыз</h2>
-            <div class="ornament-divider"></div>
+            <h2 class="section-title" style="font-size: 28px;">МЕКЕН-ЖАЙЫМЫЗ</h2>
+            <div class="diamond-divider" style="margin-bottom: 30px;"><div class="diamond-shape"></div></div>
             
-            <p style="font-size: 16px; margin-bottom: 5px; color: var(--text-color); font-weight: 500;">Ақтау қаласы</p>
-            <p style="font-size: 32px; font-family: 'Cormorant Garamond', serif; color: var(--gold-dark); margin-bottom: 5px; font-weight: 600;">"Assyl Grant"</p>
-            <p style="font-size: 14px; color: #888; margin-bottom: 25px;">мейрамханасы</p>
+            <div style="background: var(--white); padding: 40px 20px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.05);">
+                <p style="font-size: 16px; margin-bottom: 5px; color: var(--text-color); font-weight: 500; text-transform: uppercase; letter-spacing: 1px;">Ақтау қаласы</p>
+                <p style="font-size: 34px; font-family: 'Cormorant Garamond', serif; color: var(--gold-dark); margin-bottom: 5px; font-weight: 600;">"Assyl Grant"</p>
+                <p style="font-size: 14px; color: #888; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 2px;">мейрамханасы</p>
 
-            <a href="https://2gis.kz/aktau/geo/70000001032946876/51.296690,43.692229" class="btn" target="_blank">
-                📍 2Gis картасынан ашу
-            </a>
+                <a href="https://2gis.kz/aktau/geo/70000001032946876/51.296690,43.692229" class="btn" target="_blank">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2C8.13 2 5 5.13 5 9C5 14.25 12 22 12 22C12 22 19 14.25 19 9C19 5.13 15.87 2 12 2ZM12 11.5C10.62 11.5 9.5 10.38 9.5 9C9.5 7.62 10.62 6.5 12 6.5C13.38 6.5 14.5 7.62 14.5 9C14.5 10.38 13.38 11.5 12 11.5Z" fill="white"/>
+                    </svg>
+                    2Gis картасынан ашу
+                </a>
+            </div>
         </div>
 
-        <div class="section reveal">
+        <div class="section reveal" style="background-color: var(--white);">
             <h2 class="section-title" style="font-size: 24px; line-height: 1.4;">Тойға келуіңізді растауыңызды сұраймыз!</h2>
             <div class="ornament-divider"></div>
 
@@ -400,17 +394,29 @@
             isPlaying = !isPlaying;
         }
 
-        // Таймер
-        const countDownDate = new Date("May 11, 2026 18:00:00").getTime();
+        // Таймер (Уақыт форматталып түзетілген нұсқасы)
+        const countDownDate = new Date("2026-05-11T18:00:00+05:00").getTime();
+        
         setInterval(function() {
             const now = new Date().getTime();
             const distance = countDownDate - now;
 
             if (distance > 0) {
-                document.getElementById("days").innerText = Math.floor(distance / (1000 * 60 * 60 * 24));
-                document.getElementById("hours").innerText = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                document.getElementById("mins").innerText = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                document.getElementById("secs").innerText = Math.floor((distance % (1000 * 60)) / 1000);
+                let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                let mins = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                let secs = Math.floor((distance % (1000 * 60)) / 1000);
+
+                // Сан 10-нан кіші болса, алдына 0 қосу (мысалы: 9 емес, 09)
+                days = days < 10 ? "0" + days : days;
+                hours = hours < 10 ? "0" + hours : hours;
+                mins = mins < 10 ? "0" + mins : mins;
+                secs = secs < 10 ? "0" + secs : secs;
+
+                document.getElementById("days").innerText = days;
+                document.getElementById("hours").innerText = hours;
+                document.getElementById("mins").innerText = mins;
+                document.getElementById("secs").innerText = secs;
             } else {
                 document.getElementById("countdown").innerHTML = "<h3 style='color:var(--gold-dark); font-family: Cormorant Garamond;'>Той басталды!</h3>";
             }
